@@ -1,4 +1,4 @@
-export default function IngredientsList({ ingredients, handleGetRecipe }) {
+export default function IngredientsList({ ingredients, handleGetRecipe, isLoading }) {
     return (
         <div>
             <p className="font-medium text-[20px] mb-4">Ingredients on hand:</p>
@@ -23,7 +23,7 @@ export default function IngredientsList({ ingredients, handleGetRecipe }) {
                 </p>
               </div>
               <button onClick={handleGetRecipe} className="bg-[#D17557] text-white px-5 py-3 rounded-md text-[14px] hover:cursor-pointer">
-                Get a recipe
+                {isLoading ? "Generating..." : "Get a Recipe"}
               </button>
             </div>
           )}

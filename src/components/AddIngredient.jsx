@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ErrorMessage from "./ErrorMessage";
 import ClaudeRecipe from "./ClaudeRecipe";
 import IngredientsList from "./IngredientsList";
@@ -8,6 +8,12 @@ export default function AddIngredient() {
   const [ingredients, setIngredients] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [recipe, setRecipe] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    if (recipe !== "") {
+      stopLoading();
+    }
+  }, [recipe]);
 
   function isIngredientExists(ingredientName) {
     if (ingredients.includes(ingredientName)) {
@@ -15,14 +21,12 @@ export default function AddIngredient() {
     }
     return false;
   }
-
   function isEmpty(ingredientName) {
     if (ingredientName === "") {
       return true;
     }
     return false;
   }
-
   function validateIngredient(ingredientName) {
     if (isEmpty(ingredientName)) {
       return "Ingredient name cannot be empty.";
@@ -31,6 +35,9 @@ export default function AddIngredient() {
     } else {
       return "";
     }
+  }
+  function hideErrorMessage() {
+    setErrorMessage("");
   }
 
   function addIngredient(ingredientsFormData) {
@@ -43,13 +50,17 @@ export default function AddIngredient() {
     }
   }
 
-  async function getRecipe() {
-    const recipeResponse = await getRecipeFromMistral(ingredients);
-    setRecipe(recipeResponse);
+  function makeLoading() {
+    setIsLoading(true);
+  }
+  function stopLoading() {
+    setIsLoading(false);
   }
 
-  function hideErrorMessage() {
-    setErrorMessage("");
+  async function getRecipe() {
+    makeLoading();
+    const recipeResponse = await getRecipeFromMistral(ingredients);
+    setRecipe(recipeResponse);
   }
 
   return (
@@ -77,6 +88,7 @@ export default function AddIngredient() {
           <IngredientsList
             ingredients={ingredients}
             handleGetRecipe={getRecipe}
+            isLoading={isLoading}
           />
         </>
       )}
