@@ -12,7 +12,6 @@ export default function IngredientsList({ ingredients, handleGetRecipe }) {
                 </li>
                 ))}
             </ul>
-
             {ingredients.length > 4 && (
             <div className="flex justify-between items-center bg-[#e3e3e3] rounded-md px-6 py-8 mt-10">
               <div>

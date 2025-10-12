@@ -2,11 +2,12 @@ import { useState } from "react";
 import ErrorMessage from "./ErrorMessage";
 import ClaudeRecipe from "./ClaudeRecipe";
 import IngredientsList from "./IngredientsList";
+import { getRecipeFromMistral } from "../../ai/getRecipe";
 
 export default function AddIngredient() {
   const [ingredients, setIngredients] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isRecipe, setIsRecipe] = useState(false);
+  const [recipe, setRecipe] = useState("");
 
   function isIngredientExists(ingredientName) {
     if (ingredients.includes(ingredientName)) {
@@ -42,9 +43,10 @@ export default function AddIngredient() {
     }
   }
 
-  function handleGetRecipe() {
-    setIsRecipe(!isRecipe);
-  } 
+  async function getRecipe() {
+    const recipeResponse = await getRecipeFromMistral(ingredients);
+    setRecipe(recipeResponse);
+  }
 
   function hideErrorMessage() {
     setErrorMessage("");
@@ -53,9 +55,6 @@ export default function AddIngredient() {
   return (
     <div className="container mx-auto px-4">
       <form
-        // action handles preventing the default behavior of form submission,
-        // and handles reset of values
-        // it also gets the form data and passes it to addIngredient function
         action={addIngredient}
         className="flex flex-wrap gap-3 items-center py-10"
       >
@@ -75,12 +74,13 @@ export default function AddIngredient() {
 
       {ingredients.length > 0 && (
         <>
-          <IngredientsList ingredients={ingredients} handleGetRecipe={handleGetRecipe} />
+          <IngredientsList
+            ingredients={ingredients}
+            handleGetRecipe={getRecipe}
+          />
         </>
       )}
-      {isRecipe && (
-        <ClaudeRecipe />
-      )}
+      {recipe !== "" && <ClaudeRecipe recipe={recipe} />}
 
       {errorMessage && (
         <div onClick={hideErrorMessage} className="hover:cursor-pointer">
