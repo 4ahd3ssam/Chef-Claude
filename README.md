@@ -1,5 +1,5 @@
-![Tenzies Gameplay Demo](src/assets/applicationScreenshot1.png)
-![Tenzies Gameplay Demo](src/assets/applicationScreenshot2.png)
+![Chef-Claude Demo](src/assets/applicationScreenshot1.png)
+![Chef-Claude Demo](src/assets/applicationScreenshot2.png)
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
