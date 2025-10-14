@@ -1,4 +1,4 @@
-export default function IngredientsList({ ingredients, handleGetRecipe, isLoading }) {
+export default function IngredientsList({ ingredients, handleGetRecipe, isLoading, recipeSectionRef }) {
     return (
         <div>
             <p className="font-medium text-[20px] mb-4">Ingredients on hand:</p>
@@ -13,7 +13,7 @@ export default function IngredientsList({ ingredients, handleGetRecipe, isLoadin
                 ))}
             </ul>
             {ingredients.length > 4 && (
-            <div className="flex justify-between items-center bg-[#e3e3e3] rounded-md px-6 py-8 mt-10">
+            <div ref={recipeSectionRef} className="flex justify-between items-center bg-[#e3e3e3] rounded-md px-6 py-8 mt-10">
               <div>
                 <p className="text-[18px] font-[500] mb-2">
                   Ready for a recipe?

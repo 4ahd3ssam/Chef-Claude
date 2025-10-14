@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ErrorMessage from "./ErrorMessage";
 import ClaudeRecipe from "./ClaudeRecipe";
 import IngredientsList from "./IngredientsList";
@@ -9,9 +9,19 @@ export default function AddIngredient() {
   const [errorMessage, setErrorMessage] = useState("");
   const [recipe, setRecipe] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const recipeSectionRef = useRef(null);
+
   useEffect(() => {
     if (recipe !== "") {
       stopLoading();
+    }
+    if (recipe !== "" && recipeSectionRef.current !== null) {
+      const yCoord =
+        recipeSectionRef.current.getBoundingClientRect().top + window.scrollY;
+      window.scroll({
+        top: yCoord,
+        behavior: "smooth",
+      });
     }
   }, [recipe]);
 
@@ -89,6 +99,7 @@ export default function AddIngredient() {
             ingredients={ingredients}
             handleGetRecipe={getRecipe}
             isLoading={isLoading}
+            ref={recipeSectionRef}
           />
         </>
       )}

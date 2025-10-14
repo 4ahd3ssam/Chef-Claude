@@ -1,9 +1,9 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-export default function ClaudeRecipe({ recipe }) {
+export default function ClaudeRecipe({ recipe, recipeSectionRef }) {
   return (
-    <div className="my-10">
+    <div className="my-10" ref={recipeSectionRef}>
       <ReactMarkdown
         children={recipe}
         remarkPlugins={[remarkGfm]}
@@ -25,7 +25,7 @@ export default function ClaudeRecipe({ recipe }) {
             <ol className="list-decimal ml-6 space-y-1 mb-6" {...props} />
           ),
           li: (props) => (
-            <li className="text-gray-800" {...props} />
+            <li className="text-[14px] text-gray-600 mb-3" {...props} />
           ),
           p: (props) => (
             <p
